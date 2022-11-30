@@ -1,9 +1,7 @@
 
 
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.NoSuchElementException;
 
 public class CatCafe implements Iterable<Cat> {
 	public CatNode root;
@@ -142,54 +140,59 @@ public class CatCafe implements Iterable<Cat> {
 			/*
 			 * TODO: ADD YOUR CODE HERE
 			 */
-			if (c.getMonthHired() < this.catEmployee.getMonthHired()) {
+			// remember this node is left or right child of the parent
+			Boolean isLeftChild = null;
+			if ( parent != null ) {
+				isLeftChild = parent.junior == this;
+			}
+
+			CatNode nodeUp = null;
+			if (c.getMonthHired() < catEmployee.getMonthHired()) {
 				if (this.junior == null) {
-					this.junior = new CatNode(c);
-					this.junior.parent = this;
-					if(c.getFurThickness() > this.junior.parent.catEmployee.getFurThickness()){
-						rotateright(this.junior);}
+					junior = new CatNode(c);
 				}
 				else {
 					junior = junior.hire(c);
-					junior.parent = this;
-					if(junior.catEmployee.getFurThickness() > this.parent.catEmployee.getFurThickness()){
-						rotateright(this.junior);
-					}
 				}
-
+				junior.parent = this;
+				if(junior.catEmployee.getFurThickness() > catEmployee.getFurThickness()){
+					nodeUp = rotateRight();
+				}
 			}
 			else  {
-				if (this.senior == null) {
-					this.senior = new CatNode(c);
-					//this.senior.parent = this;
-					if(c.getFurThickness() > this.senior.parent.catEmployee.getFurThickness()){
-						rotateleft(this.senior);
-					}
+				if (senior == null) {
+					senior = new CatNode(c);
 				}
 				else {
 					senior = senior.hire(c);
-					junior.parent = this;
-					if(senior.catEmployee.getFurThickness() > this.parent.catEmployee.getFurThickness()){
-						rotateleft(this.senior);
-					}
+				}
+				senior.parent = this;
+				if(senior.catEmployee.getFurThickness() > catEmployee.getFurThickness()){
+					nodeUp = rotateLeft();
 				}
 			}
 
+			// link nodeUp with its grandpa
+			if ( parent != null )
+			{
+				if ( isLeftChild )
+				{
+					parent.junior = nodeUp;
+				}
+				else {
+					parent.senior = nodeUp;
+				}
+				nodeUp.parent = parent;
+			}
 			return root;
 		}
 
-		private void rotateleft(CatNode a){
-			CatNode parent = a.parent;
-			CatNode rightC = a.senior;
-
-			a.senior = rightC.junior;
-			if(rightC.junior != null){
-				rightC.junior.parent = a;
-			}
-			rightC.junior = a;
-			a.parent = rightC;
-
-			replaceParentC(parent, a, rightC);
+		private CatNode rotateLeft(){
+			CatNode nodeR = senior; // the node to go up
+			CatNode oldLeftOfR = nodeR.junior;  // i.e.  node A
+			nodeR.junior = this;
+			this.senior = oldLeftOfR;
+			return nodeR;
 		}
 		private void replaceParentC(CatNode parent, CatNode oldChild, CatNode newChild){
 			if(parent == null){
@@ -203,18 +206,15 @@ public class CatCafe implements Iterable<Cat> {
 				newChild.parent = parent;
 			}
 		}
-		private void rotateright (CatNode a){
-			CatNode parent = a.parent;
-			CatNode leftC = a.junior;
 
-			a.junior = leftC.senior;
-			if(leftC.senior != null){
-				leftC.senior.parent = a;
-			}
-			leftC.senior = a;
-			a.parent = leftC;
-			replaceParentC(parent, a, leftC);
+		private CatNode rotateRight(){
+			CatNode nodeL = junior; // the node to go up
+			CatNode oldRightOfL = nodeL.senior;
+			nodeL.senior = this;
+			this.junior = oldRightOfL;
+			return nodeL;
 		}
+
 		// remove c from the tree rooted at this and returns the root of the resulting tree
 		public CatNode retire(Cat c) {
 			/*
