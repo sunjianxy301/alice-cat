@@ -184,7 +184,7 @@ public class CatCafe implements Iterable<Cat> {
 				}
 				nodeUp.parent = parent;
 			}
-			return root;
+			return nodeUp != null ? nodeUp : this;
 		}
 
 		private CatNode rotateLeft(){
