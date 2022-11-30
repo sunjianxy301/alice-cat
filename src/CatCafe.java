@@ -22,22 +22,19 @@ public class CatCafe implements Iterable<Cat> {
 		/*
 		 * TODO: ADD YOUR CODE HERE
 		 */
-		CatCafe catCafe = new CatCafe();
+		this.root = cafe.root;
+
 		CatNode oldNode = cafe.root;
 
-		catCafe.root = oldNode;
-		hire(oldNode.catEmployee);
 
 		copy(oldNode, cafe.root);
 	}
 
 	private void copy (CatNode oldNode, CatNode newNode){
 		if(oldNode.junior != null){
-			newNode.hire(oldNode.junior.catEmployee);
 			copy(oldNode.junior, newNode.junior);
 		}
 		if(oldNode.senior != null){
-			newNode.hire(oldNode.senior.catEmployee);
 			copy(oldNode.senior, newNode.senior);
 		}
 	}
@@ -170,7 +167,7 @@ public class CatCafe implements Iterable<Cat> {
 			else if (c.getMonthHired() > this.catEmployee.getMonthHired()) {
 				if (this.senior == null) {
 					this.senior = new CatNode(c);
-					this.senior.parent = this;
+					//this.senior.parent = this;
 					if(c.getFurThickness() > this.senior.parent.catEmployee.getFurThickness()){
 						rotateleft(this.senior);
 					}
