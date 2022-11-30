@@ -142,10 +142,7 @@ public class CatCafe implements Iterable<Cat> {
 			/*
 			 * TODO: ADD YOUR CODE HERE
 			 */
-			if (root == null) {
-				root = new CatNode(c);
-			}
-			else if (c.getMonthHired() < this.catEmployee.getMonthHired()) {
+			if (c.getMonthHired() < this.catEmployee.getMonthHired()) {
 				if (this.junior == null) {
 					this.junior = new CatNode(c);
 					this.junior.parent = this;
@@ -160,7 +157,7 @@ public class CatCafe implements Iterable<Cat> {
 				}
 
 			}
-			else if (c.getMonthHired() > this.catEmployee.getMonthHired()) {
+			else  {
 				if (this.senior == null) {
 					this.senior = new CatNode(c);
 					//this.senior.parent = this;
