@@ -141,10 +141,10 @@ public class CatCafe implements Iterable<Cat> {
 			 * TODO: ADD YOUR CODE HERE
 			 */
 			// remember this node is left or right child of the parent
-			Boolean isLeftChild = null;
-			if ( parent != null ) {
-				isLeftChild = parent.junior == this;
-			}
+//			Boolean isLeftChild = null;
+//			if ( parent != null ) {
+//				isLeftChild = parent.junior == this;
+//			}
 
 			CatNode nodeUp = null;
 			if (c.getMonthHired() < catEmployee.getMonthHired()) {
@@ -173,17 +173,17 @@ public class CatCafe implements Iterable<Cat> {
 			}
 
 			// link nodeUp with its grandpa
-			if ( parent != null )
-			{
-				if ( isLeftChild )
-				{
-					parent.junior = nodeUp;
-				}
-				else {
-					parent.senior = nodeUp;
-				}
-				nodeUp.parent = parent;
-			}
+//			if ( parent != null )
+//			{
+//				if ( isLeftChild )
+//				{
+//					parent.junior = nodeUp;
+//				}
+//				else {
+//					parent.senior = nodeUp;
+//				}
+//				nodeUp.parent = parent;
+//			}
 			return nodeUp != null ? nodeUp : this;
 		}
 
