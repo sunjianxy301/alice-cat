@@ -22,21 +22,17 @@ public class CatCafe implements Iterable<Cat> {
 		/*
 		 * TODO: ADD YOUR CODE HERE
 		 */
-		this.root = cafe.root;
-
-		CatNode oldNode = cafe.root;
-
-
-		copy(oldNode, this.root);
+		root = copyTree( cafe.root );
 	}
 
-	private void copy (CatNode oldNode, CatNode newNode){
-		if(oldNode.junior != null){
-			copy(oldNode.junior, newNode.junior);
-		}
-		if(oldNode.senior != null){
-			copy(oldNode.senior, newNode.senior);
-		}
+	private CatNode copyTree (CatNode fromNode){
+		// copy its ref to cat
+		if ( fromNode == null)
+			return null;
+		CatNode toNode = new CatNode(fromNode.catEmployee);
+		toNode.junior = copyTree( fromNode.junior );
+		toNode.senior = copyTree( toNode.senior);
+		return  toNode;
 	}
 
 
