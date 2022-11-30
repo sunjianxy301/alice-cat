@@ -151,6 +151,7 @@ public class CatCafe implements Iterable<Cat> {
 				}
 				else {
 					junior = junior.hire(c);
+					junior.parent = this;
 					if(junior.catEmployee.getFurThickness() > this.parent.catEmployee.getFurThickness()){
 						rotateright(this.junior);
 					}
@@ -167,6 +168,7 @@ public class CatCafe implements Iterable<Cat> {
 				}
 				else {
 					senior = senior.hire(c);
+					junior.parent = this;
 					if(senior.catEmployee.getFurThickness() > this.parent.catEmployee.getFurThickness()){
 						rotateleft(this.senior);
 					}
