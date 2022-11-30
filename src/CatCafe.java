@@ -27,7 +27,7 @@ public class CatCafe implements Iterable<Cat> {
 		CatNode oldNode = cafe.root;
 
 
-		copy(oldNode, cafe.root);
+		copy(oldNode, this.root);
 	}
 
 	private void copy (CatNode oldNode, CatNode newNode){
