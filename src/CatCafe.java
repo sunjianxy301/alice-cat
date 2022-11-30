@@ -163,7 +163,7 @@ public class CatCafe implements Iterable<Cat> {
 			else if (c.getMonthHired() > this.catEmployee.getMonthHired()) {
 				if (this.senior == null) {
 					this.senior = new CatNode(c);
-					this.senior.parent = this;
+					//this.senior.parent = this;
 					if(c.getFurThickness() > this.senior.parent.catEmployee.getFurThickness()){
 						rotateleft(this.senior);
 					}
