@@ -147,7 +147,7 @@ public class CatCafe implements Iterable<Cat> {
 //			}
 
 			CatNode nodeUp = null;
-			if (c.getMonthHired() < catEmployee.getMonthHired()) {
+			if (c.getMonthHired() > catEmployee.getMonthHired()) {
 				if (this.junior == null) {
 					junior = new CatNode(c);
 				}
@@ -194,18 +194,7 @@ public class CatCafe implements Iterable<Cat> {
 			this.senior = oldLeftOfR;
 			return nodeR;
 		}
-		private void replaceParentC(CatNode parent, CatNode oldChild, CatNode newChild){
-			if(parent == null){
-				root = newChild;
-			} else if(parent.junior == oldChild){
-				parent.junior = newChild;
-			} else if (parent.senior == oldChild){
-				parent.senior = newChild;
-			}
-			if(newChild != null){
-				newChild.parent = parent;
-			}
-		}
+
 
 		private CatNode rotateRight(){
 			CatNode nodeL = junior; // the node to go up
@@ -220,21 +209,45 @@ public class CatCafe implements Iterable<Cat> {
 			/*
 			 * TODO: ADD YOUR CODE HERE
 			 */
-			if(root == null){
-				return null;
-			} else if( c.getMonthHired() < root.catEmployee.getMonthHired()){
-				root.junior.retire(c);
-			} else if (c.getMonthHired() > root.catEmployee.getMonthHired()){
-				root.senior.retire(c);
-			} else if(this.junior == null)
-				root = root.senior;
-			else if(root.senior == null)
-				root = root.junior;
-			else {
-				root.catEmployee = root.senior.findMostJunior();
-				root.senior.retire(root.catEmployee);
+			CatNode nodeUp = null;
+			//Base Case: if the tree is empty
+			if (root == null) {
+				return root;
 			}
-			return root;
+			if(c.getMonthHired() > catEmployee.getMonthHired()){
+				junior = junior.retire(c);
+				junior.parent = this;
+				if(junior.catEmployee.getFurThickness() > catEmployee.getFurThickness()){
+					nodeUp = rotateRight();}
+			}
+			else if(c.getMonthHired() < catEmployee.getMonthHired()){
+				senior = senior.retire(c);
+				senior.parent = this;
+				if(senior.catEmployee.getFurThickness() > catEmployee.getFurThickness()){
+					nodeUp = rotateLeft();}
+			}
+			else{
+				//node with one child
+				if(junior == null){
+					return senior;
+				}
+				else if(senior == null){
+					return junior;
+				}
+				else{
+					//node with two children
+					CatNode temp = junior;
+					while(temp.senior != null){
+						temp = temp.senior;
+					}
+					catEmployee = temp.catEmployee;
+					junior = junior.retire(temp.catEmployee);
+					junior.parent = this;
+					if(junior.catEmployee.getFurThickness() > catEmployee.getFurThickness()){
+						nodeUp = rotateRight();}
+				}
+			}
+		return nodeUp != null ? nodeUp : this;
 		}
 
 		// find the cat with highest seniority in the tree rooted at this
