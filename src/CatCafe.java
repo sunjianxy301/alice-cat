@@ -192,20 +192,14 @@ public class CatCafe implements Iterable<Cat> {
 			 */
 			CatNode nodeUp = null;
 			//Base Case: if the tree is empty
-			if (root == null) {
-				return root;
+			if (c == null) {
+				return null;
 			}
 			if(c.getMonthHired() > catEmployee.getMonthHired()){
 				junior = junior.retire(c);
-				junior.parent = this;
-				if(junior.catEmployee.getFurThickness() > catEmployee.getFurThickness()){
-					nodeUp = rotateRight();}
 			}
 			else if(c.getMonthHired() < catEmployee.getMonthHired()){
 				senior = senior.retire(c);
-				senior.parent = this;
-				if(senior.catEmployee.getFurThickness() > catEmployee.getFurThickness()){
-					nodeUp = rotateLeft();}
 			}
 			else{
 				//node with one child
