@@ -120,6 +120,15 @@ public class CatCafe implements Iterable<Cat> {
 		construct(c.junior, list);
 		construct(c.senior, list);
 	}
+
+	public void makeList_seniorityAscending(CatNode c, ArrayList<Cat> list){
+		if(c == null){
+			return ;
+		}
+		makeList_seniorityAscending(c.junior, list);
+		list.add(c.catEmployee);
+		makeList_seniorityAscending(c.senior, list);
+	}
 	// returns a list of list of Cats.
 	// The cats in the list at index 0 need be groomed in the next week.
 	// The cats in the list at index i need to be groomed in i weeks.
@@ -130,26 +139,27 @@ public class CatCafe implements Iterable<Cat> {
 		 */
 		ArrayList<ArrayList<Cat>> list_of_Schedule = new ArrayList<>();
 		ArrayList<Cat> flatList = new ArrayList<Cat>();
-		construct(root, flatList);
+		makeList_seniorityAscending(root, flatList);
 		if ( flatList.isEmpty() )
 			return list_of_Schedule;
 		// sort desc by grooming days
-		final Cat catOfTheLargest = flatList.stream().sorted(new Comparator<Cat>() {
-			@Override
-			public int compare(Cat o1, Cat o2) {
-				return o2.getDaysToNextGrooming() - o1.getDaysToNextGrooming();
-			}
-		}).findFirst().get();
+		int daysMax = -1;
+		for (int i = 0; i < flatList.size(); i++) {
+			final Cat cat = flatList.get(i);
+			if ( cat.getDaysToNextGrooming() > daysMax) daysMax = cat.getDaysToNextGrooming();
+		}
+
 		// initialize the result list
-		for ( int i = 0; i<catOfTheLargest.getDaysToNextGrooming() / 7; i++)
+		final int totalWeeks = daysMax / 7;
+		for (int i = 0; i<= totalWeeks; i++)
 		{
 			list_of_Schedule.add( new ArrayList<>());
 		}
 		// put cats in to result list
 		for (int i = 0; i < flatList.size(); i++) {
-			final Cat theCat = flatList.get(i);
-			int week = theCat.getDaysToNextGrooming() / 7;
-					list_of_Schedule.get(week).add(theCat);
+			final Cat cat = flatList.get(i);
+			int week = cat.getDaysToNextGrooming() / 7;
+					list_of_Schedule.get(week).add(cat);
 			}
 
 		return list_of_Schedule;
