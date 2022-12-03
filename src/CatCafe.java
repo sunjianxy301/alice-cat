@@ -1,9 +1,6 @@
 
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Iterator;
+import java.util.*;
 
 public class CatCafe implements Iterable<Cat> {
 	public CatNode root;
@@ -131,18 +128,29 @@ public class CatCafe implements Iterable<Cat> {
 		/*
 		 * TODO: ADD YOUR CODE HERE
 		 */
-		ArrayList<ArrayList<Cat>> list_of_Schedule = new ArrayList<ArrayList<Cat>>();
-		ArrayList<Cat> list1 = new ArrayList<Cat>();
-		construct(root, list1);
-		int weeks = 0;
-		while(weeks < list_of_Schedule.size()) {
-			for (int i = 0; i < list1.size(); i++) {
-				if (list1.get(i).getDaysToNextGrooming() % 7 == weeks){
-					list_of_Schedule.get(weeks).add(list1.get(i));
-				}
+		ArrayList<ArrayList<Cat>> list_of_Schedule = new ArrayList<>();
+		ArrayList<Cat> flatList = new ArrayList<Cat>();
+		construct(root, flatList);
+		if ( flatList.isEmpty() )
+			return list_of_Schedule;
+		// sort desc by grooming days
+		final Cat catOfTheLargest = flatList.stream().sorted(new Comparator<Cat>() {
+			@Override
+			public int compare(Cat o1, Cat o2) {
+				return o2.getDaysToNextGrooming() - o1.getDaysToNextGrooming();
 			}
-			weeks++;
+		}).findFirst().get();
+		// initialize the result list
+		for ( int i = 0; i<catOfTheLargest.getDaysToNextGrooming() / 7; i++)
+		{
+			list_of_Schedule.add( new ArrayList<>());
 		}
+		// put cats in to result list
+		for (int i = 0; i < flatList.size(); i++) {
+			final Cat theCat = flatList.get(i);
+			int week = theCat.getDaysToNextGrooming() / 7;
+					list_of_Schedule.get(week).add(theCat);
+			}
 
 		return list_of_Schedule;
 	}
