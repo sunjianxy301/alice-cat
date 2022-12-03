@@ -132,11 +132,16 @@ public class CatCafe implements Iterable<Cat> {
 		 * TODO: ADD YOUR CODE HERE
 		 */
 		ArrayList<ArrayList<Cat>> list_of_Schedule = new ArrayList<ArrayList<Cat>>();
-		int counter = 0;
-		ArrayList<Cat> list1 = new ArrayList<Cat>(); //create a new array list
+		ArrayList<Cat> list1 = new ArrayList<Cat>();
 		construct(root, list1);
-		for(int i = 0; i< list1.size(); i++){
-
+		int weeks = 0;
+		while(weeks < list_of_Schedule.size()) {
+			for (int i = 0; i < list1.size(); i++) {
+				if (list1.get(i).getDaysToNextGrooming() % 7 == weeks){
+					list_of_Schedule.get(weeks).add(list1.get(i));
+				}
+			}
+			weeks++;
 		}
 
 		return list_of_Schedule;
