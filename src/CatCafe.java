@@ -105,7 +105,7 @@ public class CatCafe implements Iterable<Cat> {
 		 */
 		double expected_amount = 0;
 		ArrayList<Cat> list1 = new ArrayList<Cat>(); //create a new array list
-		list1 = construct(root, list1);
+		construct(root, list1);
 		for(int i = 0; i< list1.size(); i++){
 			if(list1.get(i).getDaysToNextGrooming() < numDays){
 				expected_amount += list1.get(i).getExpectedGroomingCost();
@@ -114,14 +114,13 @@ public class CatCafe implements Iterable<Cat> {
 		return expected_amount;
 	}
 
-	public ArrayList<Cat> construct(CatNode c, ArrayList<Cat> list){
+	public void construct(CatNode c, ArrayList<Cat> list){
 		if(c == null){
-			return list;
+			return ;
 		}
 		list.add(c.catEmployee);
 		construct(c.junior, list);
 		construct(c.senior, list);
-		return list;
 	}
 	// returns a list of list of Cats.
 	// The cats in the list at index 0 need be groomed in the next week.
@@ -134,7 +133,7 @@ public class CatCafe implements Iterable<Cat> {
 		ArrayList<ArrayList<Cat>> list_of_Schedule = new ArrayList<ArrayList<Cat>>();
 		int counter = 0;
 		ArrayList<Cat> list1 = new ArrayList<Cat>(); //create a new array list
-		list1 = construct(root, list1);
+		construct(root, list1);
 		for(int i = 0; i< list1.size(); i++){
 
 		}
