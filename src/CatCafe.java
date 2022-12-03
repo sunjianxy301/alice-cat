@@ -1,6 +1,8 @@
 
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 
 public class CatCafe implements Iterable<Cat> {
@@ -74,26 +76,25 @@ public class CatCafe implements Iterable<Cat> {
 		 */
 		ArrayList<Cat> list1 = new ArrayList<Cat>(); //create a new array list
 		ArrayList<Cat> list2 = new ArrayList<Cat>();
-		int position = 0;
+		int index_thickest = 0;
 
-		list1.add(0, root.catEmployee); //set root to the first element
+		construct(root, list1);
+		int n = list1.size();
+		for(int i =0; i< n; i++){
+			Cat key = list1.get(i);
+			int j = i-1;
 
-		while (root != null){
-			while(root.junior != null){
-				list1.add(2*position +1 ,root.junior.catEmployee);
-				root = root.junior;
-				position = 2*position +1;
+			while(j >= 0 && list1.get(j).getFurThickness() > key.getFurThickness()){
+				list1.get(j+1).equals(list1.get(j));
+				j= j-1;
+
 			}
-			position = 0;
-			while(root.senior != null){
-				list1.add(2*position +2, root.senior.catEmployee);
-				root = root.senior;
-				position = 2*position +2;
-			}
+			list1.get(j+1).equals(key);
 
 		}
-		for(int i =0; i<numOfCatsToHonor ; i++){
+		for(int i =0; i< numOfCatsToHonor; i++){
 			list2.add(list1.get(i));
+
 		}
 		return list2;
 	}
