@@ -74,9 +74,10 @@ public class CatCafe implements Iterable<Cat> {
 		 */
 		ArrayList<Cat> list1 = new ArrayList<Cat>(); //create a new array list
 		ArrayList<Cat> list2 = new ArrayList<Cat>();
-
 		int position = 0;
-		list1.set(0, root.catEmployee); //set root to the first element
+
+		list1.add(0, root.catEmployee); //set root to the first element
+
 		while (root != null){
 			while(root.junior != null){
 				list1.add(2*position +1 ,root.junior.catEmployee);
@@ -91,7 +92,7 @@ public class CatCafe implements Iterable<Cat> {
 			}
 
 		}
-		for(int i =0; i<numOfCatsToHonor; i++){
+		for(int i =0; i<numOfCatsToHonor ; i++){
 			list2.add(list1.get(i));
 		}
 		return list2;
@@ -102,9 +103,26 @@ public class CatCafe implements Iterable<Cat> {
 		/*
 		 * TODO: ADD YOUR CODE HERE
 		 */
-		return 0;
+		double expected_amount = 0;
+		ArrayList<Cat> list1 = new ArrayList<Cat>(); //create a new array list
+		list1 = construct(root, list1);
+		for(int i = 0; i< list1.size(); i++){
+			if(list1.get(i).getDaysToNextGrooming() < numDays){
+				expected_amount += list1.get(i).getExpectedGroomingCost();
+			}
+		}
+		return expected_amount;
 	}
 
+	public ArrayList<Cat> construct(CatNode c, ArrayList<Cat> list){
+		if(c == null){
+			return list;
+		}
+		list.add(c.catEmployee);
+		construct(c.junior, list);
+		construct(c.senior, list);
+		return list;
+	}
 	// returns a list of list of Cats.
 	// The cats in the list at index 0 need be groomed in the next week.
 	// The cats in the list at index i need to be groomed in i weeks.
@@ -113,7 +131,15 @@ public class CatCafe implements Iterable<Cat> {
 		/*
 		 * TODO: ADD YOUR CODE HERE
 		 */
-		return null;
+		ArrayList<ArrayList<Cat>> list_of_Schedule = new ArrayList<ArrayList<Cat>>();
+		int counter = 0;
+		ArrayList<Cat> list1 = new ArrayList<Cat>(); //create a new array list
+		list1 = construct(root, list1);
+		for(int i = 0; i< list1.size(); i++){
+
+		}
+
+		return list_of_Schedule;
 	}
 
 
@@ -294,6 +320,7 @@ public class CatCafe implements Iterable<Cat> {
 			/*
 			 * TODO: ADD YOUR CODE HERE
 			 */
+			//return current.data and current = current.next
 			Cat tmp = current;
 			int pos = catList.indexOf(current);
 			current = catList.get(pos+1);
