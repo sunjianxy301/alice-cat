@@ -475,72 +475,72 @@ class test_get_grooming_schedule_1 implements Runnable{
 
 
     }
-    class iterator1 implements Runnable{
-        @Override
-        public void run() {
-            Cat A = new Cat("A", 25, 33, 5, 85.0);
-            Cat B = new Cat("B", 35, 29, 2, 250.0);
-            Cat C = new Cat("C", 18, 12, 12, 30.0);
-            Cat D = new Cat("D", 12, 5, 5, 85.0);
 
-            CatCafe cafe = new CatCafe();
-            cafe.hire(A);
-            cafe.hire(B);
-            cafe.hire(C);
-            cafe.hire(D);
+}
+class iterator1 implements Runnable{
+    @Override
+    public void run() {
+        Cat A = new Cat("A", 25, 33, 5, 85.0);
+        Cat B = new Cat("B", 35, 29, 2, 250.0);
+        Cat C = new Cat("C", 18, 12, 12, 30.0);
+        Cat D = new Cat("D", 12, 5, 5, 85.0);
 
-            Stack<Cat> expected = new Stack<>();
-            expected.push(B);
-            expected.push(A);
-            expected.push(C);
-            expected.push(D);
+        CatCafe cafe = new CatCafe();
+        cafe.hire(A);
+        cafe.hire(B);
+        cafe.hire(C);
+        cafe.hire(D);
 
-            Stack<Cat> actual = new Stack<>();
+        Stack<Cat> expected = new Stack<>();
+        expected.push(B);
+        expected.push(A);
+        expected.push(C);
+        expected.push(D);
 
-            for(var cat : cafe){
-                if(cat == null){
-                    throw new AssertionError("The iterator should not return null.");
-                }
-                actual.push(cat);
+        Stack<Cat> actual = new Stack<>();
+
+        for(var cat : cafe){
+            if(cat == null){
+                throw new AssertionError("The iterator should not return null.");
             }
-
-            if(!expected.equals(actual)){
-                throw new AssertionError("The iterator did not work properly.");
-            }
-
-            System.out.println("Test passed. ");
-
+            actual.push(cat);
         }
-    }
 
-    class iterator2 implements Runnable{
-        @Override
-        public void run() {
-
-            CatCafe cafe = new CatCafe();
-
-            Stack<Cat> expected = new Stack<>();
-
-            Stack<Cat> actual = new Stack<>();
-
-            for (Cat cat : cafe) {
-                if (cat == null) {
-                    throw new AssertionError("The iterator should not return null because" +
-                            " .hasNext() must return false when no non-null elements are left.");
-                }
-                actual.push(cat);
-            }
-
-            if(!expected.equals(actual)){
-                throw new AssertionError("The iterator did not work properly.");
-            }
-
-            System.out.println("Test passed. ");
-
+        if(!expected.equals(actual)){
+            throw new AssertionError("The iterator did not work properly.");
         }
+
+        System.out.println("Test passed. ");
+
     }
 }
 
+class iterator2 implements Runnable{
+    @Override
+    public void run() {
+
+        CatCafe cafe = new CatCafe();
+
+        Stack<Cat> expected = new Stack<>();
+
+        Stack<Cat> actual = new Stack<>();
+
+        for (Cat cat : cafe) {
+            if (cat == null) {
+                throw new AssertionError("The iterator should not return null because" +
+                        " .hasNext() must return false when no non-null elements are left.");
+            }
+            actual.push(cat);
+        }
+
+        if(!expected.equals(actual)){
+            throw new AssertionError("The iterator did not work properly.");
+        }
+
+        System.out.println("Test passed. ");
+
+    }
+}
 
 public class A3_Minitester {
 
