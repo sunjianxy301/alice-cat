@@ -13,8 +13,8 @@ class test_hire_1 implements Runnable{
         cafe.hire(A);
         cafe.hire(B);
 
-        if ((cafe.root.senior.catEmployee.equals(B) && cafe.root.catEmployee.equals(A))){
-            throw new AssertionError("CatB should be junior of CatA and CatA is the root");
+        if (!(cafe.root.senior.catEmployee.equals(B) && cafe.root.catEmployee.equals(A))){
+            throw new AssertionError("CatB should be senior of CatA and CatA is the root");
         };
         System.out.println("Test passed.");
     }
@@ -546,28 +546,28 @@ public class A3_Minitester {
 
     static String[] tests = {
             "test_hire_1",
-            "test_hire_2",
-            "test_hire_3",
-            "test_hire_4",
-            "test_hire_5",
-            "test_retire_1",
-            "test_retire_2",
-            "test_retire_3",
-            "test_retire_4",
-            "test_retire_5",
-            "test_retire_6",
-            "test_find_most_junior_1",
-            "test_find_most_junior_2",
-            "test_find_most_junior_3",
-            "test_find_most_senior_1",
-            "test_find_most_senior_2",
-            "test_find_most_senior_3",
-            "test_build_hof_1",
-            "test_build_hof_2",
-            "test_get_grooming_schedule_1",
-            "test_budget_grooming_expense_1",
-            "iterator1",
-            "iterator2"
+//            "test_hire_2",
+//            "test_hire_3",
+//            "test_hire_4",
+//            "test_hire_5",
+//            "test_retire_1",
+//            "test_retire_2",
+//            "test_retire_3",
+//            "test_retire_4",
+//            "test_retire_5",
+//            "test_retire_6",
+//            "test_find_most_junior_1",
+//            "test_find_most_junior_2",
+//            "test_find_most_junior_3",
+//            "test_find_most_senior_1",
+//            "test_find_most_senior_2",
+//            "test_find_most_senior_3",
+//            "test_build_hof_1",
+//            "test_build_hof_2",
+//            "test_get_grooming_schedule_1",
+//            "test_budget_grooming_expense_1",
+//            "iterator1",
+//            "iterator2"
 
     };
     public static void main(String[] args) {
