@@ -545,7 +545,7 @@ class test_get_grooming_schedule_1 implements Runnable{
 public class A3_Minitester {
 
     static String[] tests = {
-            "test_hire_1",
+//            "test_hire_1",
 //            "test_hire_2",
 //            "test_hire_3",
 //            "test_hire_4",
@@ -566,8 +566,8 @@ public class A3_Minitester {
 //            "test_build_hof_2",
 //            "test_get_grooming_schedule_1",
 //            "test_budget_grooming_expense_1",
-//            "iterator1",
-//            "iterator2"
+            "iterator1",
+            "iterator2"
 
     };
     public static void main(String[] args) {
