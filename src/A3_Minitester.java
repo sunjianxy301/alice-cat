@@ -1,4 +1,7 @@
+
+
 import java.util.ArrayList;
+import java.util.Stack;
 
 class test_hire_1 implements Runnable{
     @Override
@@ -10,7 +13,7 @@ class test_hire_1 implements Runnable{
         cafe.hire(A);
         cafe.hire(B);
 
-        if (!(cafe.root.senior.catEmployee.equals(B) && cafe.root.catEmployee.equals(A))){
+        if ((cafe.root.senior.catEmployee.equals(B) && cafe.root.catEmployee.equals(A))){
             throw new AssertionError("CatB should be junior of CatA and CatA is the root");
         };
         System.out.println("Test passed.");
@@ -418,9 +421,9 @@ class test_budget_grooming_expense_1 implements Runnable{
 }
 
 
-class test_get_grooming_schedule_1 implements Runnable {
+class test_get_grooming_schedule_1 implements Runnable{
     @Override
-    public void run() {
+    public void run(){
         Cat A = new Cat("A", 30, 50, 5, 85.0);
         Cat B = new Cat("B", 20, 30, 2, 250.0);
         Cat C = new Cat("C", 15, 20, 12, 30.0);
@@ -450,19 +453,19 @@ class test_get_grooming_schedule_1 implements Runnable {
         ans.add(week2);
 
         ArrayList<ArrayList<Cat>> res = cafe.getGroomingSchedule();
-        if (ans.size() != res.size()) {
+        if (ans.size() !=res.size()){
             System.out.println(ans);
             System.out.println(res);
             throw new AssertionError("Test failed for grooming schedule. size of output array does not match size of expected output");
 
         }
-        for (int i = 0; i < 3; i += 1) {
+        for (int i =0; i<3; i+=1){
             ArrayList<Cat> ansW = ans.get(i);
             ArrayList<Cat> resW = res.get(i);
 
-            for (int j = 0; j < ansW.size(); j++) {
+            for (int j=0; j<ansW.size(); j++) {
                 if (!(ansW.get(j).equals(resW.get(j)))) {
-                    throw new AssertionError("Test failed for grooming schedule. Expected " + ansW.toString() +
+                    throw new AssertionError("Test failed for grooming schedule. Expected "+ ansW.toString() +
                             " in week " + i + " but got " + resW.toString());
 
                 }
@@ -472,7 +475,73 @@ class test_get_grooming_schedule_1 implements Runnable {
 
 
     }
+    class iterator1 implements Runnable{
+        @Override
+        public void run() {
+            Cat A = new Cat("A", 25, 33, 5, 85.0);
+            Cat B = new Cat("B", 35, 29, 2, 250.0);
+            Cat C = new Cat("C", 18, 12, 12, 30.0);
+            Cat D = new Cat("D", 12, 5, 5, 85.0);
+
+            CatCafe cafe = new CatCafe();
+            cafe.hire(A);
+            cafe.hire(B);
+            cafe.hire(C);
+            cafe.hire(D);
+
+            Stack<Cat> expected = new Stack<>();
+            expected.push(B);
+            expected.push(A);
+            expected.push(C);
+            expected.push(D);
+
+            Stack<Cat> actual = new Stack<>();
+
+            for(var cat : cafe){
+                if(cat == null){
+                    throw new AssertionError("The iterator should not return null.");
+                }
+                actual.push(cat);
+            }
+
+            if(!expected.equals(actual)){
+                throw new AssertionError("The iterator did not work properly.");
+            }
+
+            System.out.println("Test passed. ");
+
+        }
+    }
+
+    class iterator2 implements Runnable{
+        @Override
+        public void run() {
+
+            CatCafe cafe = new CatCafe();
+
+            Stack<Cat> expected = new Stack<>();
+
+            Stack<Cat> actual = new Stack<>();
+
+            for (Cat cat : cafe) {
+                if (cat == null) {
+                    throw new AssertionError("The iterator should not return null because" +
+                            " .hasNext() must return false when no non-null elements are left.");
+                }
+                actual.push(cat);
+            }
+
+            if(!expected.equals(actual)){
+                throw new AssertionError("The iterator did not work properly.");
+            }
+
+            System.out.println("Test passed. ");
+
+        }
+    }
 }
+
+
 public class A3_Minitester {
 
     static String[] tests = {
@@ -497,8 +566,10 @@ public class A3_Minitester {
             "test_build_hof_2",
             "test_get_grooming_schedule_1",
             "test_budget_grooming_expense_1",
+            "iterator1",
+            "iterator2"
 
-        };
+    };
     public static void main(String[] args) {
         int numPassed = 0;
         for(String className: tests)    {

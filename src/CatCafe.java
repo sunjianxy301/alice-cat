@@ -220,8 +220,8 @@ public class CatCafe implements Iterable<Cat> {
 		private CatNode rotateLeft(){
 			CatNode nodeR = senior; // the node to go up
 			CatNode oldLeftOfR = nodeR.junior;  // i.e.  node A
-			nodeR.junior = this;
-			this.senior = oldLeftOfR;
+			nodeR.junior = this; //junior =p
+			this.senior = oldLeftOfR; // senior = A
 			return nodeR;
 		}
 
@@ -327,16 +327,21 @@ public class CatCafe implements Iterable<Cat> {
 
 	private class CatCafeIterator implements Iterator<Cat> {
 		// HERE YOU CAN ADD THE FIELDS YOU NEED
+
 		Cat current;
 		ArrayList<Cat> catList = new ArrayList<Cat>();
-		//put senoiry tree into list???
+
+
 
 		private CatCafeIterator() {
 			/*
 			 * TODO: ADD YOUR CODE HERE
 			 */
 			//	current points to head of the list current = list.head
+
+			makeList_seniorityAscending(root, catList);
 			current = catList.get(0);
+
 		}
 
 		public Cat next(){
@@ -344,11 +349,13 @@ public class CatCafe implements Iterable<Cat> {
 			 * TODO: ADD YOUR CODE HERE
 			 */
 			//return current.data and current = current.next
-			Cat tmp = current;
-			int pos = catList.indexOf(current);
-			current = catList.get(pos+1);
-			return tmp;
-
+			//noSuchelement excpetion
+		if(!hasNext()){
+				throw new NoSuchElementException();
+			}
+		Cat temp = current;
+		current = catList.get(catList.indexOf(current) + 1);
+		return temp;
 		}
 
 		public boolean hasNext() {
