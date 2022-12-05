@@ -329,42 +329,32 @@ public class CatCafe implements Iterable<Cat> {
 	private class CatCafeIterator implements Iterator<Cat> {
 		// HERE YOU CAN ADD THE FIELDS YOU NEED
 
-		Cat current;
-		int current_index = 0;
+		int nextIndex = 0;
 		ArrayList<Cat> catList = new ArrayList<Cat>();
-
-
 
 		private CatCafeIterator() {
 			/*
 			 * TODO: ADD YOUR CODE HERE
 			 */
-			//	current points to head of the list current = list.head
 			makeList_seniorityAscending(root, catList);
-			current = catList.get(current_index);
-		    current_index = catList.indexOf(current);
 		}
+
 		public Cat next() {
 			/*
 			 * TODO: ADD YOUR CODE HERE
 			 */
-			//return current.data and current = current.next
-			//noSuchelement excpetion
-			try{
-				Cat temp = current;
-				current = catList.get(current_index+1);
-				current_index = catList.indexOf(current);
-				return temp;
+			if ( hasNext())
+			{
+				return catList.get( nextIndex ++ );
 			}
-			catch(NoSuchElementException n){
-				return null;
-			}
+			throw new NoSuchElementException("index should be little than " + catList.size());
 		}
+
 		public boolean hasNext() {
 			/*
 			 * TODO: ADD YOUR CODE HERE
 			 */
-			return ((current_index < catList.size() - 1) && (current != null));
+			return nextIndex < catList.size();
 		}
 
 
