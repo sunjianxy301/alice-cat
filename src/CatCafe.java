@@ -268,7 +268,8 @@ public class CatCafe implements Iterable<Cat> {
 					junior = junior.retire(temp.catEmployee);
 					junior.parent = this;
 					if(junior.catEmployee.getFurThickness() > catEmployee.getFurThickness()){
-						nodeUp = rotateRight();}
+						nodeUp = rotateRight();
+					}
 				}
 			}
 		return nodeUp != null ? nodeUp : this;
@@ -329,6 +330,7 @@ public class CatCafe implements Iterable<Cat> {
 		// HERE YOU CAN ADD THE FIELDS YOU NEED
 
 		Cat current;
+		int current_index = 0;
 		ArrayList<Cat> catList = new ArrayList<Cat>();
 
 
@@ -338,31 +340,31 @@ public class CatCafe implements Iterable<Cat> {
 			 * TODO: ADD YOUR CODE HERE
 			 */
 			//	current points to head of the list current = list.head
-
 			makeList_seniorityAscending(root, catList);
-			current = catList.get(0);
-
+			current = catList.get(current_index);
+		    current_index = catList.indexOf(current);
 		}
-
-		public Cat next(){
+		public Cat next() {
 			/*
 			 * TODO: ADD YOUR CODE HERE
 			 */
 			//return current.data and current = current.next
 			//noSuchelement excpetion
-		if(!hasNext()){
-				throw new NoSuchElementException();
+			try{
+				Cat temp = current;
+				current = catList.get(current_index+1);
+				current_index = catList.indexOf(current);
+				return temp;
 			}
-		Cat temp = current;
-		current = catList.get(catList.indexOf(current) + 1);
-		return temp;
+			catch(NoSuchElementException n){
+				return null;
+			}
 		}
-
 		public boolean hasNext() {
 			/*
 			 * TODO: ADD YOUR CODE HERE
 			 */
-			return (current != null);
+			return ((current_index < catList.size() - 1) && (current != null));
 		}
 
 
